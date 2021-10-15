@@ -19,6 +19,11 @@ window.Form = Form;
 
 import router from './routes';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -31,6 +36,8 @@ import router from './routes';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+Vue.component('systems-index', require('./views/systems/index').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
