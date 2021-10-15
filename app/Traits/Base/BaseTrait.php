@@ -2,9 +2,15 @@
 
 namespace App\Traits\Base;
 
-
 use Illuminate\Support\Carbon;
 
+/**
+ * Trait BaseTrait
+ * @package App\Traits\Base
+ *
+ * @property Carbon $start_at
+ * @property Carbon $end_at
+ */
 trait BaseTrait
 {
     use Uuidable, StatusTrait;

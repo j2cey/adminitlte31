@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Status;
 use Illuminate\Http\Request;
+use App\Http\Resources\StatusResource;
+use App\Http\Requests\Status\UpdateStatusRequest;
 
 class StatusController extends Controller
 {
@@ -15,6 +17,14 @@ class StatusController extends Controller
     public function index()
     {
         //
+    }
+
+    public function fetch() {
+        return StatusResource::collection(Status::all());
+    }
+
+    public function fetchone($id) {
+        return Status::where('id', $id)->first();
     }
 
     /**
@@ -41,7 +51,7 @@ class StatusController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Status  $status
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
     public function show(Status $status)
@@ -52,7 +62,7 @@ class StatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Status  $status
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
     public function edit(Status $status)
@@ -64,18 +74,26 @@ class StatusController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Status  $status
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(UpdateStatusRequest $request, Status $status)
     {
-        //
+        $status->update([
+            'code' => $request->code,
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        $status->setDefault($request->is_default);
+
+        return $status;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Status  $status
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
     public function destroy(Status $status)

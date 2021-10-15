@@ -30,8 +30,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $image
- * @property boolean $is_local
- * @property boolean $is_ldap
+ * @property bool $is_local
+ * @property bool $is_ldap
  * @property string|null $objectguid
  *
  * @property string $login_type

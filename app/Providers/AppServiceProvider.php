@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Repositories\Contracts\IUserRepositoryContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(IUserRepositoryContract::class, UserRepository::class);
     }
 
     /**
@@ -51,5 +54,21 @@ class AppServiceProvider extends ServiceProvider
         Blueprint::macro('dropBaseForeigns', function () {
             $this->dropForeign(['status_id']);
         });
+
+        JsonResource::withoutWrapping();
+
+        /**
+         * tell Laravel that, when the App boots,
+         * which is after all other Services are already registered,
+         * we are gonna add to the config array our own settings
+         */
+        config([
+            'Settings' => Setting::getAllGrouped()
+        ]);
+
+        /*Validator::extend('stepcanexpire_if', function($attribute, $value, $parameters, $validator) {
+            $rule = new StepCanExpire($parameters[0]);
+            return $rule->passes($attribute, $value);
+        });*/
     }
 }

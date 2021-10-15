@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SystemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UserController::class);
+
+Route::get('systems.index',[SystemController::class,'index'])
+    ->name('systems.index')
+    ->middleware('auth');

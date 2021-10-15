@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'AdminLTE') }}</title>
+    <title>{{ config('app.name', 'Admin-IT') }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -17,7 +17,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
-<body class="hold-transition sidebar-mini dark">
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 
     <!-- wrapper -->
     <div class="wrapper" id="app">
