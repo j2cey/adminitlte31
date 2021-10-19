@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _userBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userBus */ "./resources/js/views/users/userBus.js");
 //
 //
 //
@@ -98,10 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "user-item-list",
   props: {
@@ -116,6 +114,13 @@ __webpack_require__.r(__webpack_exports__);
       return __webpack_require__.e(/*! import() */ "resources_js_views_users_item_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./item */ "./resources/js/views/users/item.vue"));
     }
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    _userBus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('user_created', function (user) {
+      _this.users.push(user);
+    });
+  },
   data: function data() {
     return {
       list_title: this.list_title_prop,
@@ -123,16 +128,20 @@ __webpack_require__.r(__webpack_exports__);
       searchUsers: null
     };
   },
-  methods: {},
+  methods: {
+    addUser: function addUser() {
+      _userBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('user_create');
+    }
+  },
   computed: {
     filteredUsers: function filteredUsers() {
-      var _this = this;
+      var _this2 = this;
 
       var tempUsers = this.users;
 
       if (this.searchUsers !== '' && this.searchUsers) {
         tempUsers = tempUsers.filter(function (item) {
-          return item.name.toUpperCase().includes(_this.searchUsers.toUpperCase());
+          return item.name.toUpperCase().includes(_this2.searchUsers.toUpperCase());
         });
       } // Sorting
 
@@ -161,6 +170,22 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/views/users/userBus.js":
+/*!*********************************************!*\
+  !*** ./resources/js/views/users/userBus.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vue__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
 /***/ }),
 
@@ -257,7 +282,37 @@ var render = function() {
           _vm._v(_vm._s(_vm.list_title ? _vm.list_title : "Users"))
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "card-tools" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "btn-group" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu dropdown-menu-right",
+                attrs: { role: "menu" }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    on: {
+                      click: function($event) {
+                        return _vm.addUser()
+                      }
+                    }
+                  },
+                  [_vm._v("Add New")]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body table-responsive p-0" }, [
@@ -301,13 +356,13 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _vm._m(1)
+                        _vm._m(3)
                       ])
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(4)
               ])
             ])
           ]),
@@ -348,63 +403,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-tools" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-tool",
-          attrs: { type: "button", "data-card-widget": "collapse" }
-        },
-        [_c("i", { staticClass: "fas fa-plus" })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "btn-group" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-tool dropdown-toggle",
-            attrs: { type: "button", "data-toggle": "dropdown" }
-          },
-          [_c("i", { staticClass: "fas fa-wrench" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "dropdown-menu dropdown-menu-right",
-            attrs: { user: "menu" }
-          },
-          [
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Action")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Another action")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Something else here")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-divider" }),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Separated link")
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-tool",
-          attrs: { type: "button", "data-card-widget": "remove" }
-        },
-        [_c("i", { staticClass: "fas fa-times" })]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-tool",
+        attrs: { type: "button", "data-card-widget": "collapse" }
+      },
+      [_c("i", { staticClass: "fas fa-plus" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-tool dropdown-toggle",
+        attrs: { type: "button", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "fas fa-wrench" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-tool",
+        attrs: { type: "button", "data-card-widget": "remove" }
+      },
+      [_c("i", { staticClass: "fas fa-times" })]
+    )
   },
   function() {
     var _vm = this

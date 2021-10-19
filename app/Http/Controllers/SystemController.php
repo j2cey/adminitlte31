@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Status;
 use App\Models\Setting;
+use App\Models\ModelType;
 use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
@@ -26,6 +27,7 @@ class SystemController extends Controller
         $settings_grouped = Setting::getAllGrouped();
         $roles = Role::all()->load('permissions');
         $users = User::all()->load(['roles','status']);
+        $modeltypes = ModelType::all()->load(['modelattributes']);
 
         return view('systems.index')
             ->with('statuses', $statuses)
@@ -33,6 +35,7 @@ class SystemController extends Controller
             ->with('settings_grouped', $settings_grouped)
             ->with('roles', $roles)
             ->with('users', $users)
+            ->with('modeltypes', $modeltypes)
             ;
     }
 }

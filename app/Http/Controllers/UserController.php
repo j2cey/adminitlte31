@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\SearchCollection;
 use App\Http\Requests\User\FetchRequest;
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Repositories\Contracts\IUserRepositoryContract;
 
 use Exception;
@@ -57,6 +59,25 @@ class UserController extends Controller
 
     public function fetchall() {
         return User::all();
+    }
+
+    public function store(CreateUserRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => bcrypt(($request->password)),
+            'is_local' => 1,
+        ]);
+
+        // sync roles
+        $user->syncRoles($request->roles);
+
+        // set status
+        $user->setStatus($request->status);
+
+        return $user->load(['roles','status']);
     }
 
     /**

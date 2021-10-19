@@ -7,6 +7,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ModelTypeController;
+use App\Http\Controllers\ModelAttributeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,15 +64,29 @@ Route::get('settings.fetch',[SettingController::class,'fetch'])
 
 #endregion
 
-#region permissions & roles
+#region Model Type & Attributes
 
-Route::get('permissions',[RoleController::class, 'permissions'])->middleware('auth');
+Route::resource('modeltypes', ModelTypeController::class)->middleware('auth');
+Route::get('modeltypes.fetch',[ModelTypeController::class,'fetch'])
+    ->name('modeltypes.fetch')
+    ->middleware('auth');
+
+Route::resource('modelattributes', ModelAttributeController::class)->middleware('auth');
+Route::get('modelattributes.fetch',[ModelAttributeController::class,'fetch'])
+    ->name('modelattributes.fetch')
+    ->middleware('auth');
+
+#endregion
+
+#region permissions & roles
 
 Route::resource('roles',RoleController::class)->middleware('auth');
 Route::get('roles.fetch',[RoleController::class,'fetch'])
     ->name('roles.fetch')
     ->middleware('auth');
 Route::get('hasrole/{roleid}',[RoleController::class, 'hasrole'])->middleware('auth');
+
+Route::get('permissions',[RoleController::class, 'permissions'])->middleware('auth');
 
 #endregion
 

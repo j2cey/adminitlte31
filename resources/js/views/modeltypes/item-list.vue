@@ -1,7 +1,11 @@
 <template>
     <div class="card collapsed-card">
         <div class="card-header">
-            <h5 class="card-title">{{ list_title ? list_title : 'Roles' }}</h5>
+            <h5 class="card-title">{{ list_title }}
+                <small class="text text-xs">
+                    {{ searchModelTypes === "" ? "" : " (" + filteredModelTypes.length + ")" }}
+                </small>
+            </h5>
 
             <div class="card-tools">
 
@@ -13,7 +17,11 @@
                         <i class="fas fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a @click="addRole()"  class="dropdown-item">Add New</a>
+                        <a href="#" class="dropdown-item">Action</a>
+                        <a href="#" class="dropdown-item">Another action</a>
+                        <a href="#" class="dropdown-item">Something else here</a>
+                        <a class="dropdown-divider"></a>
+                        <a href="#" class="dropdown-item">Separated link</a>
                     </div>
                 </div>
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -28,13 +36,14 @@
                 <tr>
                     <th>
                         <div class="row">
+                            <div class="col-sm-2 col-6"></div>
                             <div class="col-sm-3 col-6"></div>
                             <div class="col-sm-3 col-6"></div>
-                            <div class="col-sm-3 col-6"></div>
-                            <div class="col-sm-3 col-6">
+                            <div class="col-sm-2 col-6"></div>
+                            <div class="col-sm-2 col-6">
                                 <div class="btn-group">
                                     <div class="input-group input-group-sm">
-                                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="searchRoles">
+                                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="searchModelTypes">
                                         <div class="input-group-append">
                                             <button class="btn btn-navbar" type="button">
                                                 <i class="fas fa-search"></i>
@@ -45,16 +54,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3 col-6">
-                                <span class="text text-sm">Name</span>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 col-6">
-                                <span class="text text-sm">Description</span>
+                            <div class="col-sm-2 col-6">
+                                <span class="text text-sm">Label</span>
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-3 col-6">
-                                <span class="text text-sm">Permission(s)</span>
+                                <span class="text text-sm">Namespace</span>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-6">
+                                <span class="text text-sm">Type</span>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-2 col-6">
+                                <span class="text text-sm">Attributes</span>
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-2 col-6">
@@ -65,9 +78,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(role, index) in filteredRoles" v-if="filteredRoles" :key="role.id" class="text text-xs">
-                    <td v-if="index < 10">
-                        <RoleItem v-if="role.name" :role_prop="role"></RoleItem>
+                <tr v-for="(modeltype, index) in filteredModelTypes" v-if="filteredModelTypes" :key="modeltype.id" class="text text-xs">
+                    <td>
+                        <ModelTypeItem v-if="modeltype.label && index < 10" :modeltype_prop="modeltype"></ModelTypeItem>
                     </td>
                 </tr>
                 </tbody>
@@ -78,57 +91,47 @@
 
         </div>
         <!-- /.card-footer -->
-        <RoleAddUpdate></RoleAddUpdate>
+        <ModelTypeAddUpdate></ModelTypeAddUpdate>
     </div>
     <!-- /.card -->
 </template>
 
 <script>
-    import RoleBus from "./roleBus";
-
     export default {
-        name: "role-item-list",
+        name: "modeltype-item-list",
         props: {
-            list_title_prop: null,
-            roles_prop: {}
+            list_title_prop: {default: "ModelTypes", type: String},
+            modeltypes_prop: {}
         },
         components: {
-            RoleAddUpdate: () => import('./addupdate'),
-            RoleItem: () => import('./item')
-        },
-        mounted() {
-            RoleBus.$on('role_created', (role) => {
-                this.roles.push(role)
-            })
+            ModelTypeAddUpdate: () => import('./addupdate'),
+            ModelTypeItem: () => import('./item')
         },
         data() {
             return {
                 list_title: this.list_title_prop,
-                roles: this.roles_prop,
-                searchRoles: null,
+                modeltypes: this.modeltypes_prop,
+                searchModelTypes: "",
             };
         },
         methods: {
-            addRole() {
-                RoleBus.$emit('role_create');
-            }
         },
         computed: {
-            filteredRoles() {
+            filteredModelTypes() {
 
-                let tempRoles = this.roles
+                let tempModelTypes = this.modeltypes
 
-                if (this.searchRoles !== '' && this.searchRoles) {
-                    tempRoles = tempRoles.filter((item) => {
-                        return item.name
+                if (this.searchModelTypes !== '' && this.searchModelTypes) {
+                    tempModelTypes = tempModelTypes.filter((item) => {
+                        return item.label
                             .toUpperCase()
-                            .includes(this.searchRoles.toUpperCase())
+                            .includes(this.searchModelTypes.toUpperCase())
                     })
                 }
 
                 // Sorting
-                tempRoles = tempRoles.sort((a, b) => {
-                    let fa = a.name.toLowerCase(), fb = b.name.toLowerCase()
+                tempModelTypes = tempModelTypes.sort((a, b) => {
+                    let fa = a.label.toLowerCase(), fb = b.label.toLowerCase()
 
                     if (fa > fb) {
                         return -1
@@ -140,11 +143,11 @@
                 })
 
                 if (!this.ascending) {
-                    tempRoles.reverse()
+                    tempModelTypes.reverse()
                 }
                 // end Sorting
 
-                return tempRoles
+                return tempModelTypes
             }
         }
     }

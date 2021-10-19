@@ -14,12 +14,8 @@
                     <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                         <i class="fas fa-wrench"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right" user="menu">
-                        <a href="#" class="dropdown-item">Action</a>
-                        <a href="#" class="dropdown-item">Another action</a>
-                        <a href="#" class="dropdown-item">Something else here</a>
-                        <a class="dropdown-divider"></a>
-                        <a href="#" class="dropdown-item">Separated link</a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a @click="addUser()"  class="dropdown-item">Add New</a>
                     </div>
                 </div>
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -90,6 +86,8 @@
 </template>
 
 <script>
+    import UserBus from "./userBus";
+
     export default {
         name: "user-item-list",
         props: {
@@ -100,6 +98,11 @@
             UserAddUpdate: () => import('./addupdate'),
             UserItem: () => import('./item')
         },
+        mounted() {
+            UserBus.$on('user_created', (user) => {
+                this.users.push(user)
+            })
+        },
         data() {
             return {
                 list_title: this.list_title_prop,
@@ -108,6 +111,9 @@
             };
         },
         methods: {
+            addUser() {
+                UserBus.$emit('user_create');
+            }
         },
         computed: {
             filteredUsers() {

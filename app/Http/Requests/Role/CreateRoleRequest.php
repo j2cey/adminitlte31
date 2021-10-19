@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Role;
 
 
-class UpdateRoleRequest extends RoleRequest
+use phpDocumentor\Reflection\Types\Parent_;
+
+class CreateRoleRequest extends RoleRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +25,7 @@ class UpdateRoleRequest extends RoleRequest
     public function rules()
     {
         return array_merge( Parent::rules(), [
-            'name' => 'required|unique:roles,name,' . $this->input('name'),
+            'name' => 'required|unique:roles,name',
         ]);
     }
 

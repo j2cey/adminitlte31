@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\User;
 
+use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoleRequest extends RoleRequest
+class CreateUserRequest extends UserRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,9 @@ class UpdateRoleRequest extends RoleRequest
      */
     public function rules()
     {
-        return array_merge( Parent::rules(), [
-            'name' => 'required|unique:roles,name,' . $this->input('name'),
-        ]);
+        return [
+            //
+        ];
     }
 
     /**
@@ -35,7 +36,8 @@ class UpdateRoleRequest extends RoleRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'permissions' => $this->setRelevantIdsList($this->input('permissions'), false),
+            'status' => $this->setRelevantStatus($this->input('status')),
+            'roles' => $this->setRelevantIdsList($this->input('roles')),
         ]);
     }
 }

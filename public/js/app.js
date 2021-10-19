@@ -2562,6 +2562,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "index",
   props: {
@@ -2569,7 +2591,8 @@ __webpack_require__.r(__webpack_exports__);
     settings_prop: {},
     settings_grouped_prop: {},
     roles_prop: {},
-    users_prop: {}
+    users_prop: {},
+    modeltypes_prop: {}
   },
   components: {
     SettingList: function SettingList() {
@@ -2583,6 +2606,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     UserList: function UserList() {
       return __webpack_require__.e(/*! import() */ "resources_js_views_users_item-list_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../users/item-list */ "./resources/js/views/users/item-list.vue"));
+    },
+    ModelType: function ModelType() {
+      return __webpack_require__.e(/*! import() */ "resources_js_views_modeltypes_item-list_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../modeltypes/item-list */ "./resources/js/views/modeltypes/item-list.vue"));
     }
   },
   data: function data() {
@@ -2591,7 +2617,8 @@ __webpack_require__.r(__webpack_exports__);
       settings: this.settings_prop,
       settings_grouped: this.settings_grouped_prop,
       roles: this.roles_prop,
-      users: this.users_prop
+      users: this.users_prop,
+      modeltypes: this.modeltypes_prop
     };
   },
   methods: {},
@@ -39853,7 +39880,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-sm-6 col-md-3" }, [
+      _c("div", { staticClass: "col-12 col-sm-6 col-md-2" }, [
         _c("div", { staticClass: "info-box" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -39867,7 +39894,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm-6 col-md-3" }, [
+      _c("div", { staticClass: "col-12 col-sm-6 col-md-2" }, [
         _c("div", { staticClass: "info-box mb-3" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -39883,7 +39910,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "clearfix hidden-md-up" }),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm-6 col-md-3" }, [
+      _c("div", { staticClass: "col-12 col-sm-6 col-md-2" }, [
         _c("div", { staticClass: "info-box mb-3" }, [
           _vm._m(2),
           _vm._v(" "),
@@ -39897,7 +39924,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm-6 col-md-3" }, [
+      _c("div", { staticClass: "col-12 col-sm-6 col-md-2" }, [
         _c("div", { staticClass: "info-box mb-3" }, [
           _vm._m(3),
           _vm._v(" "),
@@ -39906,6 +39933,22 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "info-box-number" }, [
               _vm._v(_vm._s(_vm.users.length))
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm-6 col-md-2" }, [
+        _c("div", { staticClass: "info-box mb-3" }, [
+          _vm._m(4),
+          _vm._v(" "),
+          _c("div", { staticClass: "info-box-content" }, [
+            _c("span", { staticClass: "info-box-text" }, [
+              _vm._v("Model Types")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "info-box-number" }, [
+              _vm._v(_vm._s(_vm.modeltypes.length))
             ])
           ])
         ])
@@ -39969,6 +40012,22 @@ var render = function() {
         ],
         1
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("ModelType", {
+            attrs: {
+              list_title_prop: "Model Types",
+              modeltypes_prop: _vm.modeltypes
+            }
+          })
+        ],
+        1
+      )
     ])
   ])
 }
@@ -40003,6 +40062,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "info-box-icon bg-warning elevation-1" }, [
       _c("i", { staticClass: "fas fa-users" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon bg-danger elevation-1" }, [
+      _c("i", { staticClass: "fas fa-cubes" })
     ])
   }
 ]
@@ -55817,7 +55884,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_settings_item-list_vue":1,"resources_js_views_statuses_item-list_vue":1,"resources_js_views_roles_item-list_vue":1,"resources_js_views_users_item-list_vue":1,"resources_js_views_settings_addupdate_vue":1,"resources_js_views_settings_item_vue":1,"resources_js_views_statuses_item_vue":1,"resources_js_views_statuses_addupdate_vue":1,"resources_js_views_roles_addupdate_vue":1,"resources_js_views_roles_item_vue":1,"resources_js_views_users_addupdate_vue":1,"resources_js_views_users_item_vue":1,"resources_js_views_permissions_display_vue":1,"resources_js_views_roles_display_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_settings_item-list_vue":1,"resources_js_views_statuses_item-list_vue":1,"resources_js_views_roles_item-list_vue":1,"resources_js_views_users_item-list_vue":1,"resources_js_views_modeltypes_item-list_vue":1,"resources_js_views_settings_addupdate_vue":1,"resources_js_views_settings_item_vue":1,"resources_js_views_statuses_item_vue":1,"resources_js_views_statuses_addupdate_vue":1,"resources_js_views_roles_addupdate_vue":1,"resources_js_views_roles_item_vue":1,"resources_js_views_users_addupdate_vue":1,"resources_js_views_users_item_vue":1,"resources_js_views_modeltypes_addupdate_vue":1,"resources_js_views_modeltypes_item_vue":1,"resources_js_views_permissions_display_vue":1,"resources_js_views_roles_display_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

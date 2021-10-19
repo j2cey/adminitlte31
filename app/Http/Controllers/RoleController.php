@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Http\Requests\Role\UpdateRoleRequest;
+use App\Http\Requests\Role\CreateRoleRequest;
 use Illuminate\Contracts\Foundation\Application;
 
 class RoleController extends Controller
@@ -73,23 +74,16 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateRoleRequest $request
      * @return Builder|Model|Response
      */
-    public function store(Request $request)
+    public function store(CreateRoleRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permissions' => 'required',
+        $role = Role::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
         ]);
-
-        $perm_list = [];
-        foreach ($request->input('permissions') as $perm) {
-            $perm_list[] = $perm["name"];
-        }
-
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($perm_list);
+        $role->syncPermissions($request->input('permissions'));
 
         return $role->load(['permissions']);
 
